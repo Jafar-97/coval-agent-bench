@@ -132,7 +132,5 @@ npm run dev
 
 Built by Jafar as a targeted pitch for Coval's AI Engineer role.
 
-The build-first approach: read the engineering blog, find the documented gaps, ship working code, then reach out. No resume spam. Just proof of work.
-
 - GitHub: [Jafar-97](https://github.com/Jafar-97)
 - Email: jafarshariffai@gmail.com
