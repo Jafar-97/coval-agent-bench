@@ -13,7 +13,7 @@ app = FastAPI(title="Coval Agent Bench API", version="1.0.0")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
-    allow_credentials=True,
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -65,7 +65,7 @@ FAILURE_MODES = [
 
 class AnalyzeRequest(BaseModel):
     input_text: str
-    input_type: str  # "system_prompt" or "transcript"
+    input_type: str
     agent_name: str = "Voice Agent"
 
 class FailureModeScore(BaseModel):
@@ -128,18 +128,18 @@ For each failure mode, generate:
 - 2 to 3 specific, actionable recommendations to fix the issues
 
 FAILURE MODES TO EVALUATE:
-1. audio_degradation: How well does this agent handle noisy, compressed, accented, or low-quality audio? Does the system prompt address fallback behavior for unclear audio?
-2. multi_agent_handoff: If this agent hands off to another agent or escalates, is context preserved? Are there guardrails against hallucination cascades?
-3. conversation_complexity: Can this agent handle multi-intent requests, mid-conversation topic changes, or users who give incomplete information?
-4. instruction_following: Does this agent have clear instruction anchors that prevent drift in long or adversarial conversations?
-5. turn_detection: Does this agent have explicit handling for interruptions, overlapping speech, or knowing when to stop talking?
+1. audio_degradation: How well does this agent handle noisy, compressed, accented, or low-quality audio?
+2. multi_agent_handoff: If this agent hands off to another agent or escalates, is context preserved?
+3. conversation_complexity: Can this agent handle multi-intent requests, mid-conversation topic changes?
+4. instruction_following: Does this agent have clear instruction anchors that prevent drift?
+5. turn_detection: Does this agent have explicit handling for interruptions and overlapping speech?
 
 Return ONLY valid JSON in this exact format, no other text:
 {{
   "overall_score": <integer 0-100>,
-  "overall_verdict": "<one sentence honest verdict about this agent>",
+  "overall_verdict": "<one sentence honest verdict>",
   "production_ready": <true or false>,
-  "executive_summary": "<3 sentence summary of findings, brutally honest>",
+  "executive_summary": "<3 sentence summary, brutally honest>",
   "scores": {{
     "audio_degradation": <integer>,
     "multi_agent_handoff": <integer>,
